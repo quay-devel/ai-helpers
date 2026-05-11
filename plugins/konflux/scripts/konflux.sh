@@ -128,7 +128,8 @@ cmd_tasklog() {
   pod=$(oc_cmd get taskrun "$tr" -n "$ns" -o jsonpath='{.status.podName}' 2>/dev/null || true)
   [ -n "$pod" ] || die "No pod found for TaskRun ${tr}"
   echo "=== Logs: TaskRun ${tr} (pod: ${pod}) ==="
-  oc_cmd logs -n "$ns" "$pod" --all-containers=true 2>/dev/null
+  oc_cmd logs -n "$ns" "$pod" --all-containers=true \
+    || die "Failed to fetch logs for TaskRun ${tr} (pod: ${pod}) in namespace ${ns}"
 }
 
 cmd_components() {

@@ -113,7 +113,7 @@ fi
 echo "[5/5] Checking Konflux build cluster access..."
 if [ -n "${KONFLUX_KUBECONFIG_DATA:-}" ]; then
   _kc_tmp=$(mktemp "${TMPDIR:-/tmp}/konflux-kubeconfig.XXXXXX")
-  if echo "$KONFLUX_KUBECONFIG_DATA" | base64 -d > "$_kc_tmp" 2>&1 && \
+  if echo "$KONFLUX_KUBECONFIG_DATA" | base64 -d > "$_kc_tmp" 2>/dev/null && \
      grep -q 'apiVersion\|clusters\|kind:' "$_kc_tmp" 2>/dev/null; then
     chmod 600 "$_kc_tmp"
     mv "$_kc_tmp" "$KONFLUX_KUBECONFIG"
